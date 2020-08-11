@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-argparse functions.
+Argument parsing functions.
 """
 
 import argparse
