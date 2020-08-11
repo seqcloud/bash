@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Set up package.
+Set up koopa package.
 https://packaging.python.org/tutorials/packaging-projects/
 """
 
@@ -15,4 +15,8 @@ setuptools.setup(
     url="https://koopa.acidgenomics.com/",
     packages=setuptools.find_packages(),
     python_requires='>=3.8',
+    # install_requires=[
+    #        "PKG >= XXX",
+    #        "pytest",
+    #    ],
 )
