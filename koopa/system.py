@@ -93,10 +93,12 @@ def init_dir(name):
     os.makedirs(name=name, exist_ok=True)
 
 
+# FIXME Need to rethink this. Doesn't work in standalone package.
+# FIXME Check for /usr/local/bin/koopa or system PATH.
 def koopa_prefix():
     """
     Koopa prefix (home).
-    Updated 2020-06-03.
+    Updated 2020-08-11.
     """
     path = os.path.realpath(os.path.join(__file__, "..", "..", "..", ".."))
     assert_is_dir(path)
