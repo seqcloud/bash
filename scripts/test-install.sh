@@ -3,5 +3,5 @@ set -Eeu -o pipefail
 
 (
     cd ../ || exit 1
-    pip install .
+    python3 -m pip install .
 )
