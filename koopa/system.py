@@ -79,6 +79,39 @@ def eprint(*args, **kwargs):
     sys.exit(1)
 
 
+def find_cmd(cmd):
+    """
+    Find a system command.
+    Updated 2020-08-12.
+
+    Modified version from bcbio provenance:
+    https://github.com/bcbio/bcbio-nextgen/blob/master/bcbio/provenance/do.py
+    """
+    try:
+        return subprocess.check_output(["which", cmd]).decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+
+def find_koopa():
+    """
+    Find koopa in standard locations.
+    Updated 2020-08-12.
+
+    Modified version of 'find_bash' from bcbio provenance:
+    https://github.com/bcbio/bcbio-nextgen/blob/master/bcbio/provenance/do.py
+    """
+    for test_koopa in [
+        find_cmd("koopa"),
+        "/usr/local/bin/koopa",
+        "/usr/local/koopa/bin/koopa",
+        "~/.local/share/koopa/bin/koopa",
+    ]:
+        if test_koopa and os.path.exists(test_koopa):
+            return test_koopa
+    raise IOError("Could not find koopa in any standard location.")
+
+
 def init_dir(name):
     """
     Make a directory recursively and don't error if exists.
@@ -93,14 +126,13 @@ def init_dir(name):
     os.makedirs(name=name, exist_ok=True)
 
 
-# FIXME Need to rethink this. Doesn't work in standalone package.
-# FIXME Check for /usr/local/bin/koopa or system PATH.
 def koopa_prefix():
     """
-    Koopa prefix (home).
+    Koopa prefix.
     Updated 2020-08-11.
     """
-    path = os.path.realpath(os.path.join(__file__, "..", "..", "..", ".."))
+    koopa = find_koopa()
+    path = os.path.realpath(os.path.join(koopa, "..", ".."))
     assert_is_dir(path)
     return path
 
