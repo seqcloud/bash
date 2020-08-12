@@ -1,1 +1,31 @@
-/Users/mike/.config/koopa/dotfiles/app/python/pylintrc
+# """
+# pylint configuration.
+# Updated 2020-08-12.
+# 
+# Create skeleton:
+# pylint --generate-rcfile > pylintrc
+# 
+# Error codes (for messages control) are described in:
+# https://docs.pylint.org/en/1.6.0/features.html
+# """
+
+
+[MESSAGES CONTROL]
+
+disable=bad-continuation,
+        too-many-arguments,
+        too-many-branches,
+        too-many-locals
+
+
+[BASIC]
+
+good-names=x,
+           i,
+           j,
+           k,
+           ex,
+           Run,
+           _
+
+module-naming-style=any
