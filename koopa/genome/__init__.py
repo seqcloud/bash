@@ -10,7 +10,6 @@ from koopa.shell import shell
 from koopa.system import arg_string, koopa_prefix
 
 
-# FIXME Need to rework this. koopa_prefix not picked up correctly.
 def _genome_version(name, *args):
     """
     Internal shared genome version fetcher.
