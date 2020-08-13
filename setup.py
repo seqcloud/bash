@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Set up koopa package.
-https://packaging.python.org/tutorials/packaging-projects/
+koopa Python package.
+Updated 2020-08-13.
+
+See also:
+- https://packaging.python.org/tutorials/packaging-projects/
 """
 
 import setuptools
@@ -14,9 +17,6 @@ setuptools.setup(
     description="Shell bootloader for bioinformatics.",
     url="https://koopa.acidgenomics.com/",
     packages=setuptools.find_packages(),
-    python_requires='>=3.8',
-    # install_requires=[
-    #        "PKG >= XXX",
-    #        "pytest",
-    #    ],
+    python_requires=">=3.8",
+    install_requires=["logbook", "six"],
 )

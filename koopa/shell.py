@@ -11,12 +11,11 @@ See also:
 - https://github.com/bcbio/bcbio-nextgen/blob/master/bcbio/provenance/do.py
 """
 
-# > pip install dd
-
+import collections
 import os
 import subprocess
+import sys
 
-import collections
 import six
 
 from koopa.log import logger, logger_stdout
@@ -47,6 +46,18 @@ def find_cmd(cmd):
         return subprocess.check_output(["which", cmd]).decode().strip()
     except subprocess.CalledProcessError:
         return None
+
+
+def koopa_help():
+    """
+    Koopa help.
+    Updated 2020-08-13.
+    """
+    cmd = sys.argv[0]
+    pos_args = sys.argv[1:]
+    if "-h" in pos_args or "--help" in pos_args:
+        subprocess.call(["man", cmd])
+        sys.exit()
 
 
 def shell(cmd, log_stdout=False, env=None):
