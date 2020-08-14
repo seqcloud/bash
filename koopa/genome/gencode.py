@@ -41,9 +41,7 @@ def download_gencode_gtf(gtf_url, output_dir, decompress):
     Updated 2020-08-14.
     """
     download(
-        url=gtf_url,
-        output_dir=join(output_dir, "gtf"),
-        decompress=decompress,
+        url=gtf_url, output_dir=join(output_dir, "gtf"), decompress=decompress,
     )
 
 
@@ -53,9 +51,7 @@ def download_gencode_gff(gff_url, output_dir, decompress):
     Updated 2020-08-14.
     """
     download(
-        url=gff_url,
-        output_dir=join(output_dir, "gff"),
-        decompress=decompress,
+        url=gff_url, output_dir=join(output_dir, "gff"), decompress=decompress,
     )
 
 

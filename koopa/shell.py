@@ -65,9 +65,7 @@ def shell(cmd, env=None):
                 debug_stdout.append(line.decode("utf-8", errors="replace"))
             if exitcode is not None and exitcode != 0:
                 error_msg = (
-                    " ".join(cmd)
-                    if not isinstance(cmd, string_types)
-                    else cmd
+                    " ".join(cmd) if not isinstance(cmd, string_types) else cmd
                 )
                 error_msg += "\n"
                 error_msg += "".join(debug_stdout)

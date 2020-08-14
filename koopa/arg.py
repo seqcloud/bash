@@ -25,6 +25,4 @@ def dir_path(path):
     """
     if isdir(path):
         return path
-    raise ArgumentTypeError(
-        f"readable_dir:{path} is not a valid path"
-    )
+    raise ArgumentTypeError(f"readable_dir:{path} is not a valid path")
