@@ -7,6 +7,17 @@ import argparse
 import os
 
 
+def arg_string(*args):
+    """
+    Concatenate args into a string suitable for use in shell commands.
+    Updated 2019-10-06.
+    """
+    if len(args) == 0:
+        return None
+    args = " %s" % args
+    return args
+
+
 def dir_path(path):
     """
     Directory path.
