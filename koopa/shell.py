@@ -12,52 +12,29 @@ See also:
 """
 
 import collections
-import os
 import subprocess
-import sys
 
 import six
 
 from koopa.log import logger, logger_stdout
+from koopa.system import find_bash
 
 
-def find_bash():
+def _normalize_cmd_args(cmd):
     """
-    Find bash.
+    Normalize subprocess arguments to handle list commands, string and pipes.
+
+    Piped commands set pipefail and require use of bash to help with debugging
+    intermediate errors.
+
     Updated 2020-02-09.
     """
-    for bash in [
-        find_cmd("bash"),
-        "/usr/local/bin/bash",
-        "/usr/bin/bash",
-        "/bin/bash",
-    ]:
-        if bash and os.path.exists(bash):
-            return bash
-    raise IOError("Could not find bash in any standard location.")
-
-
-def find_cmd(cmd):
-    """
-    Find command.
-    Updated 2020-02-09.
-    """
-    try:
-        return subprocess.check_output(["which", cmd]).decode().strip()
-    except subprocess.CalledProcessError:
-        return None
-
-
-def koopa_help():
-    """
-    Koopa help.
-    Updated 2020-08-13.
-    """
-    cmd = sys.argv[0]
-    pos_args = sys.argv[1:]
-    if "-h" in pos_args or "--help" in pos_args:
-        subprocess.call(["man", cmd])
-        sys.exit()
+    if isinstance(cmd, six.string_types):
+        # Check for standard or anonymous named pipes.
+        if cmd.find(" | ") > 0 or cmd.find(">(") or cmd.find("<("):
+            return "set -o pipefail; " + cmd, True, find_bash()
+        return cmd, True, None
+    return [str(x) for x in cmd], False, None
 
 
 def shell(cmd, log_stdout=False, env=None):
@@ -107,20 +84,3 @@ def shell(cmd, log_stdout=False, env=None):
             break
     sub.communicate()
     sub.stdout.close()
-
-
-def _normalize_cmd_args(cmd):
-    """
-    Normalize subprocess arguments to handle list commands, string and pipes.
-
-    Piped commands set pipefail and require use of bash to help with debugging
-    intermediate errors.
-
-    Updated 2020-02-09.
-    """
-    if isinstance(cmd, six.string_types):
-        # Check for standard or anonymous named pipes.
-        if cmd.find(" | ") > 0 or cmd.find(">(") or cmd.find("<("):
-            return "set -o pipefail; " + cmd, True, find_bash()
-        return cmd, True, None
-    return [str(x) for x in cmd], False, None
