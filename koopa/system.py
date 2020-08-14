@@ -12,45 +12,31 @@ import sys
 from koopa.shell import shell
 
 
-def arg_string(*args):
-    """
-    Concatenate args into a string suitable for use in shell commands.
-    Updated 2019-10-06.
-    """
-    if len(args) == 0:
-        return None
-    args = " %s" % args
-    return args
-
-
 def assert_is_not_file(path):
     """
     Does the input not contain a file?
-    Updated 2019-10-07.
+    Updated 2020-08-14.
     """
     if os.path.isfile(path):
-        print("Error: File exists: '" + path + "'")
-        sys.exit(0)
+        stop("File exists: '" + path + "'")
 
 
 def assert_is_dir(path):
     """
     Does the input contain a file?
-    Updated 2020-06-03.
+    Updated 2020-08-14.
     """
     if not os.path.isdir(path):
-        print("Error: Not directory: '" + path + "'")
-        sys.exit(0)
+        stop("Not directory: '" + path + "'")
 
 
 def assert_is_file(path):
     """
     Does the input contain a file?
-    Updated 2019-10-07.
+    Updated 2020-08-14.
     """
     if not os.path.isfile(path):
-        print("Error: Not file: '" + path + "'")
-        sys.exit(0)
+        stop("Not file: '" + path + "'")
 
 
 def decompress_but_keep_original(file):
@@ -65,18 +51,20 @@ def decompress_but_keep_original(file):
     return unzip_file
 
 
-def eprint(*args, **kwargs):
+def find_bash():
     """
-    Print to stderr.
-
-    See also:
-    - 'sys.stderr.write()'.
-    - https://stackoverflow.com/questions/5574702
-
-    Updated 2019-10-06.
+    Find bash.
+    Updated 2020-02-09.
     """
-    print(*args, file=sys.stderr, **kwargs)
-    sys.exit(1)
+    for bash in [
+        find_cmd("bash"),
+        "/usr/local/bin/bash",
+        "/usr/bin/bash",
+        "/bin/bash",
+    ]:
+        if bash and os.path.exists(bash):
+            return bash
+    raise IOError("Could not find bash in any standard location.")
 
 
 def find_cmd(cmd):
@@ -126,6 +114,23 @@ def init_dir(name):
     os.makedirs(name=name, exist_ok=True)
 
 
+def koopa_help():
+    """
+    Koopa help.
+    Updated 2020-08-14.
+    """
+    cmd = sys.argv[0]
+    pos_args = sys.argv[1:]
+    if "-h" in pos_args or "--help" in pos_args:
+        man_file = os.path.realpath(
+            os.path.join(__file__, "..", "man", "man1", cmd + ".1")
+        )
+        if not os.path.isfile(man_file):
+            stop("No documentation for '" + cmd + "'.")
+        subprocess.call(["man", man_file])
+        sys.exit(0)
+
+
 def koopa_prefix():
     """
     Koopa prefix.
@@ -163,7 +168,7 @@ def download(url, output_file=None, output_dir=None, decompress=False):
     Updated 2019-11-04.
     """
     if not (output_file is None or output_dir is None):
-        eprint("Error: Specify 'output_file' or 'output_dir' but not both.")
+        stop("Specify 'output_file' or 'output_dir' but not both.")
     if output_file is None:
         output_file = os.path.basename(url)
     if output_dir is None:
@@ -177,7 +182,21 @@ def download(url, output_file=None, output_dir=None, decompress=False):
         try:
             subprocess.check_call(["curl", "-L", "-o", output_file, url])
         except subprocess.CalledProcessError:
-            eprint("Failed to download '" + output_file + "'.")
+            stop("Failed to download '" + output_file + "'.")
     if decompress is True:
         output_file = decompress_but_keep_original(output_file)
     return output_file
+
+
+def stop(*args, **kwargs):
+    """
+    Stop with error message.
+
+    See also:
+    - 'sys.stderr.write()'.
+    - https://stackoverflow.com/questions/5574702
+
+    Updated 2020-08-14.
+    """
+    print(*args, file=sys.stderr, **kwargs)
+    sys.exit(1)
