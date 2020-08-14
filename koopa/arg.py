@@ -3,8 +3,8 @@
 Argument parsing functions.
 """
 
-import argparse
-import os
+from argparse import ArgumentTypeError
+from os.path import isdir
 
 
 def arg_string(*args):
@@ -21,10 +21,10 @@ def arg_string(*args):
 def dir_path(path):
     """
     Directory path.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    if os.path.isdir(path):
+    if isdir(path):
         return path
-    raise argparse.ArgumentTypeError(
+    raise ArgumentTypeError(
         f"readable_dir:{path} is not a valid path"
     )

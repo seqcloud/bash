@@ -3,23 +3,20 @@
 FlyBase genome utilities.
 """
 
-import os
+from os.path import join, isfile
 
+from koopa.files import decompress_but_keep_original, download
 from koopa.genome import _genome_version
 from koopa.shell import shell
-from koopa.system import (
-    decompress_but_keep_original,
-    download,
-    paste_url,
-)
+from koopa.strings import paste_url
 
 
 def download_flybase_genome(release_url, output_dir, decompress, dmel):
     """
     Download genome FASTA.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    output_dir = os.path.join(output_dir, "genome")
+    output_dir = join(output_dir, "genome")
     fasta_url = paste_url(release_url, "fasta")
     download(url=paste_url(fasta_url, "md5sum.txt"), output_dir=output_dir)
     download(
@@ -34,9 +31,9 @@ def download_flybase_transcriptome(release_url, output_dir, decompress, dmel):
     Download FlyBase transcriptome FASTA.
     Updated 2020-02-09.
     """
-    output_dir = os.path.join(output_dir, "transcriptome")
-    cat_dir = os.path.join(output_dir, "cat")
-    output_fasta_file = os.path.join(
+    output_dir = join(output_dir, "transcriptome")
+    cat_dir = join(output_dir, "cat")
+    output_fasta_file = join(
         output_dir, "dmel-transcriptome-" + dmel + ".fasta.gz"
     )
     fasta_url = paste_url(release_url, "fasta")
@@ -65,9 +62,9 @@ def download_flybase_transcriptome(release_url, output_dir, decompress, dmel):
         url=paste_url(fasta_url, "dmel-all-tRNA-" + dmel + ".fasta.gz"),
         output_dir=cat_dir,
     )
-    if not os.path.isfile(output_fasta_file):
+    if not isfile(output_fasta_file):
         print("Concatenating '" + output_fasta_file + "'.")
-        fasta_glob = os.path.join(cat_dir, "dmel-all-*.fasta.gz")
+        fasta_glob = join(cat_dir, "dmel-all-*.fasta.gz")
         shell("cat " + fasta_glob + " > " + output_fasta_file)
         if decompress is True:
             decompress_but_keep_original(output_fasta_file)
@@ -76,9 +73,9 @@ def download_flybase_transcriptome(release_url, output_dir, decompress, dmel):
 def download_flybase_gtf(release_url, output_dir, decompress, dmel):
     """
     Download FlyBase GTF file.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    output_dir = os.path.join(output_dir, "gtf")
+    output_dir = join(output_dir, "gtf")
     gtf_url = paste_url(release_url, "gtf")
     download(url=paste_url(gtf_url, "md5sum.txt"), output_dir=output_dir)
     download(
@@ -91,9 +88,9 @@ def download_flybase_gtf(release_url, output_dir, decompress, dmel):
 def download_flybase_gff(release_url, output_dir, decompress, dmel):
     """
     Download FlyBase GFF3 file.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    output_dir = os.path.join(output_dir, "gff")
+    output_dir = join(output_dir, "gff")
     gff_url = paste_url(release_url, "gff")
     download(url=paste_url(gff_url, "md5sum.txt"), output_dir=output_dir)
     download(

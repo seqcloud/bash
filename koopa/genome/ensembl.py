@@ -3,10 +3,11 @@
 Ensembl genome utilities.
 """
 
-import os
+from os.path import join
 
 from koopa.genome import _genome_version
-from koopa.system import download, paste_url
+from koopa.files import download
+from koopa.strings import paste_url
 
 
 def download_ensembl_genome(
@@ -14,9 +15,9 @@ def download_ensembl_genome(
 ):
     """
     Download Ensembl genome FASTA.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    output_dir = os.path.join(output_dir, "genome")
+    output_dir = join(output_dir, "genome")
     base_url = paste_url(release_url, "fasta", organism.lower(), "dna")
     readme_url = paste_url(base_url, "README")
     checksums_url = paste_url(base_url, "CHECKSUMS")
@@ -37,9 +38,9 @@ def download_ensembl_transcriptome(
 ):
     """
     Download Ensembl transcriptome FASTA.
-    Updated 2020-02-09.
+    Updated 2020-08-14.
     """
-    output_dir = os.path.join(output_dir, "transcriptome")
+    output_dir = join(output_dir, "transcriptome")
     base_url = paste_url(release_url, "fasta", organism.lower(), "cdna")
     readme_url = paste_url(base_url, "README")
     checksums_url = paste_url(base_url, "CHECKSUMS")
@@ -56,7 +57,7 @@ def download_ensembl_gtf(
     Download Ensembl GTF file.
     Updated 2020-02-09.
     """
-    output_dir = os.path.join(output_dir, "gtf")
+    output_dir = join(output_dir, "gtf")
     base_url = paste_url(release_url, "gtf", organism.lower())
     readme_url = paste_url(base_url, "README")
     checksums_url = paste_url(base_url, "CHECKSUMS")
@@ -88,7 +89,7 @@ def download_ensembl_gff(
     Download Ensembl GFF3 file.
     Updated 2020-02-09.
     """
-    output_dir = os.path.join(output_dir, "gff")
+    output_dir = join(output_dir, "gff")
     base_url = paste_url(release_url, "gff3", organism.lower())
     readme_url = paste_url(base_url, "README")
     checksums_url = paste_url(base_url, "CHECKSUMS")

@@ -3,15 +3,15 @@
 Syntactically valid names.
 """
 
-import re
+from re import sub
 
 
 def kebab_case(string):
     """
     Kebab case.
-    Updated 2019-10-06.
+    Updated 2020-08-14.
     """
-    string = re.sub("[^0-9a-zA-Z]+", "-", string)
+    string = sub("[^0-9a-zA-Z]+", "-", string)
     string = string.lower()
     return string
 
@@ -19,8 +19,8 @@ def kebab_case(string):
 def snake_case(string):
     """
     Snake case.
-    Updated 2019-10-06.
+    Updated 2020-08-14.
     """
-    string = re.sub("[^0-9a-zA-Z]+", "_", string)
+    string = sub("[^0-9a-zA-Z]+", "_", string)
     string = string.lower()
     return string
