@@ -6,7 +6,7 @@ Updated 2020-08-14.
 
 import sys
 
-from os.path import exists, isfile, join, realpath
+from os.path import basename, dirname, exists, isfile, join, realpath
 from subprocess import CalledProcessError, call, check_output
 
 from koopa.goalie import assert_is_dir
@@ -70,9 +70,8 @@ def koopa_help():
     cmd = sys.argv[0]
     pos_args = sys.argv[1:]
     if "-h" in pos_args or "--help" in pos_args:
-        man_file = realpath(
-            join(__file__, "..", "man", "man1", cmd + ".1")
-        )
+        man_dir = realpath(join(dirname(cmd), "..", "man", "man1"))
+        man_file = join(man_dir, basename(cmd) + ".1")
         if not isfile(man_file):
             stop("No documentation for '" + cmd + "'.")
         call(["man", man_file])
