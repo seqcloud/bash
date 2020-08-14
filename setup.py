@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 koopa Python package.
-Updated 2020-08-13.
+Updated 2020-08-14.
 
 See also:
 - https://packaging.python.org/tutorials/packaging-projects/
