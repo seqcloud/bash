@@ -6,8 +6,9 @@ Genome utilities.
 import os
 import subprocess
 
+from koopa.arg import arg_string
 from koopa.shell import shell
-from koopa.system import arg_string, koopa_prefix
+from koopa.system import koopa_prefix
 
 
 def _genome_version(name, *args):
