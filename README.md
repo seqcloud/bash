@@ -1,3 +1,3 @@
 # py-koopa
 
-Internal python dependency package for koopa.
+Internal Python dependency package for [koopa](https://koopa.acidgenomics.com/).
