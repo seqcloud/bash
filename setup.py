@@ -18,5 +18,5 @@ setuptools.setup(
     url="https://koopa.acidgenomics.com/",
     packages=setuptools.find_packages(),
     python_requires=">=3.9",
-    install_requires=["pytest", "six"],
+    install_requires=["flake8", "pylint", "pytest", "six"],
 )
