@@ -29,7 +29,7 @@ def download(url, output_file=None, output_dir=None, decompress=False):
     """
     Download a file using curl.
     If output_file is unset, download to working directory as basename.
-    Updated 2019-11-04.
+    Updated 2019-12-09.
     """
     if not (output_file is None or output_dir is None):
         stop("Specify 'output_file' or 'output_dir' but not both.")
@@ -41,12 +41,12 @@ def download(url, output_file=None, output_dir=None, decompress=False):
     if isfile(output_file):
         print("File exists: '" + output_file + "'.")
     else:
-        print("Downloading '" + output_file + "'.")
+        print("Downloading '" + url + "' to '" + output_file + "'.")
         init_dir(output_dir)
         try:
             check_call(["curl", "-L", "-o", output_file, url])
         except CalledProcessError:
-            stop("Failed to download '" + output_file + "'.")
+            stop("Failed to download '" + url + "' to '" + output_file + "'.")
     if decompress is True:
         output_file = decompress_but_keep_original(output_file)
     return output_file

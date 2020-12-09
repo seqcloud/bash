@@ -57,30 +57,33 @@ def download_ensembl_transcriptome(
     download(
         url=cdna_fasta_url, output_file=cdna_fasta_file, decompress=decompress
     )
-    # ncDNA FASTA.
-    ncdna_output_dir = join(output_dir, "ncdna")
-    ncdna_base_url = paste_url(base_url, "ncdna")
-    ncdna_readme_url = paste_url(ncdna_base_url, "README")
-    ncdna_checksums_url = paste_url(ncdna_base_url, "CHECKSUMS")
-    ncdna_fasta_file_basename = organism + "." + build + ".ncdna.all.fa.gz"
-    ncdna_fasta_file = join(ncdna_output_dir, ncdna_fasta_file_basename)
-    ncdna_fasta_url = paste_url(ncdna_base_url, ncdna_fasta_file_basename)
-    download(url=ncdna_readme_url, output_dir=ncdna_output_dir)
-    download(url=ncdna_checksums_url, output_dir=ncdna_output_dir)
+    # ncRNA FASTA.
+    ncrna_output_dir = join(output_dir, "ncrna")
+    ncrna_base_url = paste_url(base_url, "ncrna")
+    ncrna_readme_url = paste_url(ncrna_base_url, "README")
+    ncrna_checksums_url = paste_url(ncrna_base_url, "CHECKSUMS")
+    ncrna_fasta_file_basename = organism + "." + build + ".ncrna.fa.gz"
+    ncrna_fasta_file = join(ncrna_output_dir, ncrna_fasta_file_basename)
+    ncrna_fasta_url = paste_url(ncrna_base_url, ncrna_fasta_file_basename)
+    download(url=ncrna_readme_url, output_dir=ncrna_output_dir)
+    download(url=ncrna_checksums_url, output_dir=ncrna_output_dir)
     download(
-        url=ncdna_fasta_url,
-        output_file=ncdna_fasta_file,
+        url=ncrna_fasta_url,
+        output_file=ncrna_fasta_file,
         decompress=decompress,
     )
     # Merged transcriptome FASTA.
-    # Combine cDNA and ncDNA into a single merged FASTA. This method is memory
-    # efficient. It automatically reads the input files chunk by chunk for you,
-    # which is more more efficient and reading the input files in and will work
-    # even if some of the input files are too large to fit into memory.
+    #
+    # This method is memory efficient. It automatically reads the input files
+    # chunk by chunk for you, which is more more efficient and reading the
+    # input files in and will work even if some of the input files are too
+    # large to fit into memory.
+    #
+    # See also:
     # - https://stackoverflow.com/a/18209002
     # - https://stackoverflow.com/a/27077437
     with open(transcriptome_file, "wb") as output_file:
-        for file in [cdna_fasta_file, ncdna_fasta_file]:
+        for file in [cdna_fasta_file, ncrna_fasta_file]:
             with open(file, "rb") as file_open:
                 copyfileobj(file_open, output_file)
 
