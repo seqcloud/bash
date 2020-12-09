@@ -13,6 +13,14 @@ from koopa.print import stop
 from koopa.shell import shell
 
 
+# FIXME HOW TO SET THE VARIABLES HERE? KWAGS?
+def concatenate():
+    """
+    Concatenate multiple files into a single output file.
+    Updated 2020-12-09.
+    """
+
+
 def decompress_but_keep_original(file):
     """
     Decompress but keep original compressed file.

@@ -41,5 +41,6 @@ def tx2gene_from_fasta(source_name, output_dir):
     if isfile(output_file):
         print("File exists: '" + output_file + "'.")
         return output_file
+    # FIXME THIS ISNT SHOWING THE TX2GENE MESSAGE CORRECTLY.
     shell(cmd + " " + input_file + " " + output_file)
     return output_file

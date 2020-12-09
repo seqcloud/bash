@@ -34,6 +34,7 @@ def _normalize_cmd_args(cmd):
     return [str(x) for x in cmd], False, None
 
 
+# FIXME THIS DOESNT SHOW SHELL MESSAGES THE WAY WE WANT...
 def shell(cmd, env=None):
     """
     Run shell command in subprocess.
