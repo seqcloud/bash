@@ -28,7 +28,7 @@ def _genome_version(name, *args):
 def tx2gene_from_fasta(source_name, output_dir):
     """
     Generate tx2gene.csv mapping file from transcriptome FASTA.
-    Updated 2020-06-03.
+    Updated 2020-12-09.
 
     Note that this function is currently called by genome download scripts, and
     assumes that output_dir has a specific structure, containing a
