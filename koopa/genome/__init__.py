@@ -25,6 +25,7 @@ def _genome_version(name, *args):
     return out
 
 
+# FIXME RETHINK THIS APPROACH, WRITING NEW SOLUTION IN R INSTEAD.
 def tx2gene_from_fasta(source_name, output_dir):
     """
     Generate tx2gene.csv mapping file from transcriptome FASTA.
