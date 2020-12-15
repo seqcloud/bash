@@ -28,6 +28,8 @@ def url_encode(string):
     """
     URL encode.
     Updated 2020-08-14.
+
+    See also `utils::URLencode` in R.
     """
     string = parse.quote(string)
     return string
